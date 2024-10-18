@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "plagio-inspector",
+  "private_key_id": "1619a4d3cef1245cab4f4a542fc183bb8309bd06",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDri+ptYtkusfu7\nEpsOuNpDcMAyZwYoQ4s3aEQG/w9yMeRE4uOJzT/rnYsFq1Vei1WhI/LtCoHkFdJH\nQLUYznArJRvYjNdlUqUBx5/xRpQi9UjoZOgcmkKSapzr933WldYYPfxK12bxq2Iz\nTmG36Jacy+iOwo/30+ba5doy36mH/C94YBZlpELD4FgmEREOWgN0fBHHqfi7eLXP\nfRfgeIJINVv7SNGjzow8aJ2ufBclP2ogHUVDmaKshu6elpmpVaOUZ0e6e/4uJl7U\nntwqak/HCh03qkm9Kt1dRbuuSak/2w0aghBhqyUqZ3gj+ybbzzUEOeCswjuHjT3q\ndivTyibLAgMBAAECggEAE0zhppjk5tiaodeCcRBgggopFXgvnvj53U5j1JbtsxO3\nepWEw3PX+vxruckyM48DMzL44sdroT7QfholPKUdt8tQnsvbkmfVMXIj/ucjmEG0\n+aXbBwz0y36E4SjkXMLmShI6K/++Zar/XujbRPB/9tUWdywmE85/KgyPdn+xKn0t\nOLCHFau+C8PmxiJv9R5DzSZpzMCR5ScTPPHoW3iBZSczAxFZbNxsc/jnnUJXc7Pn\nYXcJiuO51ezKxDZNaC5VHKVd/04uMgTLKybkp3bN5lJFVCBENPldG0jWIABtqhHs\npoLwuQitiIw1ddQCHuZ8TfTKH+rgxp7bLFSr+WcT0QKBgQD/WQGbC7xDWuUVT3vR\nQ2G0TbOnBfOIaCh0Hz15l//nmjCb80gsEZI7FiynAle7UGg53P6EapT4ExL+ZLF8\nhcc9grntenLLx32yJPHQVG05iqfJO0gMhCiNMJxhF1NBqoYe4XR8BpPwUTAZAHSR\nFPxH69B1Jdxm7PIxavtFRjW49wKBgQDsJfW1gHs5HfKnhTJG9wIuYYE+puc5a5SB\nL9w1DWlnNcLDi9jE7fbX8paPgHnxtfrLtC3FC98pVDPt49fhDH7LwUdmCnGfdzOh\nV8PwK0CfAGd+TMdJ2CjUGbDRopFzYd2GXzXZ9WL6cHHprC4DMFdlx8sk8DSlt+Ta\n9SSBAfH/zQKBgHDgvMf4cRnpVXmNMHP6cHePHcrI47Y6LR/gK4HUAqk0TSazbgUl\nI1qBW+3cKEJCskBaBB0vLHlZnTzd8GPWk5QKdPyY86RHpLYahNcOa1ZTiAZ58Uiv\nJ2n6wjZdZE2T/0QpcB/fnIhQq41x2RXFjByTDwyqVvsc5ZeY7kjaV6dTAoGBAOIM\nXC3HtSyxnCv7dmsz22SmdV+RyNjQQDGBrNsj4XeooK0q2u93ksiYMMNhCln0BwSj\njwSGHrKjJapcZbPJkD5e34ewC5/ILSYOq0LlRFBvxKHDwSjQwBR4Gygw4+Z9Ed6k\nmRnwqTRuGrzB0rG+vopxO+Y6AUt4wptN+gl74TkpAoGBANM8ZLoU6+XTkqPqFDPs\nI6a2H7KYfZLseDfbuU2Kziy+Z1JT02M4Czk6TzXtpbPhbLWSYqsvORaU1Q/tFzgt\nDFhPij4lcUcsazuRlLpD0yjK3Wuo5kRmA/LYyf7u7PzDOolzidRcfoQr5iKAxYZn\nDF+srQc1kGKNZO9o19bs5mVY\n-----END PRIVATE KEY-----\n",
+  "client_email": "storage-admin@plagio-inspector.iam.gserviceaccount.com",
+  "client_id": "117746518354885731250",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/storage-admin%40plagio-inspector.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
