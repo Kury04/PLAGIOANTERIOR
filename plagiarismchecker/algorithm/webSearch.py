@@ -1,90 +1,58 @@
-import base64
-import vertexai
-from vertexai.generative_models import GenerativeModel, SafetySetting
-from plagiarismchecker.algorithm import ConsineSim
 from googleapiclient.discovery import build
+from plagiarismchecker.algorithm import ConsineSim
 
 # Configuración de la API de Google Custom Search
-searchEngine_API = 'AIzaSyAQYLRBBeDQNxADPQtUnApntz78-urWEZI'
-searchEngine_Id = '758ad3e78879f0e08'
+searchEngine_API = 'AIzaSyCdC_2wCnMMGQmdAiZi6FfkHSwnRU82sOU' 
+searchEngine_Id = 'd16f95807e09243f6'
 
-# Inicializa Vertex AI
-vertexai.init(project="plagio-inspector", location="us-central1")
-model = GenerativeModel("gemini-1.5-flash-002")
-
-# Configuración de generación de texto
-generation_config = {
-    "max_output_tokens": 8192,
-    "temperature": 1,
-    "top_p": 0.95,
-}
-
-# Configuración de seguridad
-safety_settings = [
-    SafetySetting(
-        category=SafetySetting.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-        threshold=SafetySetting.HarmBlockThreshold.OFF
-    ),
-    SafetySetting(
-        category=SafetySetting.HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-        threshold=SafetySetting.HarmBlockThreshold.OFF
-    ),
-    SafetySetting(
-        category=SafetySetting.HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-        threshold=SafetySetting.HarmBlockThreshold.OFF
-    ),
-    SafetySetting(
-        category=SafetySetting.HarmCategory.HARM_CATEGORY_HARASSMENT,
-        threshold=SafetySetting.HarmBlockThreshold.OFF
-    ),
-]
-
+# Función de búsqueda en la web
 def searchWeb(text, output, c):
     try:
+        # Inicializa el recurso de búsqueda
         resource = build("customsearch", 'v1', developerKey=searchEngine_API).cse()
         result = resource.list(q=text, cx=searchEngine_Id).execute()
-        
+
         items = result.get('items', [])
         if not items:
             print("No se encontraron resultados.")
-            return output, c, 1
+            return output, c, 0
 
+        # Limitar a 5 resultados
+        numList = min(5, len(items))
         maxSim = 0
-        itemLink = ''
-        numList = min(5, len(items))  # Limitar a 5 resultados
-        
+        itemLinks = []  # Lista para almacenar los enlaces encontrados
+
         for item in items[:numList]:
             content = item.get('snippet', '')
-            if content:  # Asegúrate de que el contenido no esté vacío
+            link = item.get('link', '')
+            if content:  
                 simValue = ConsineSim.cosineSim(text, content)
                 
+                # Almacenar el enlace y el valor de similitud
+                itemLinks.append((link, simValue))
+                
                 if simValue > maxSim:
-                    maxSim = simValue
-                    itemLink = item['link']
+                    maxSim = simValue  # Actualiza la similitud máxima
             
-            if item['link'] in output:
-                itemLink = item['link']
-                break
+            # Aumentar el conteo de resultados
+            if link in output:
+                output[link] += 1
+                c[link] = ((c[link] * (output[link] - 1) + simValue) / output[link])
+            else:
+                output[link] = 1
+                c[link] = simValue
 
-        # Actualizar el conteo de resultados
-        if itemLink in output:
-            output[itemLink] += 1
-            c[itemLink] = ((c[itemLink] * (output[itemLink] - 1) + maxSim) / output[itemLink])
-        else:
-            output[itemLink] = 1
-            c[itemLink] = maxSim
+        # Imprimir resultados
+        print("Enlaces encontrados y sus valores de similitud:")
+        for link, simValue in itemLinks:
+            print(f"Link: {link} - Valor de Similitud: {simValue}")
 
-        # Usar Vertex AI para análisis de texto
-        chat = model.start_chat()
-        try:
-            vertex_response = chat.send_message(text)
-            print("Respuesta de Vertex AI:", vertex_response)
-        except Exception as e:
-            print("Error al enviar mensaje a Vertex AI:", e)
-            return output, c, 1  # Indica error
+        # Devolver la lista de enlaces y la similitud máxima
+        return output, c, numList
 
     except Exception as e:
         print("Error:", e)
-        return output, c, 1
-    
-    return output, c, numList
+        return output, c, 0  # Cambiado a 0 para indicar error
+
+
+

@@ -3,9 +3,7 @@ from plagiarismchecker.algorithm import webSearch
 import sys
 import re
 
-# Given a text string, remove all non-alphanumeric
-# characters (using Unicode definition of alphanumeric).
-
+# Dada una cadena de texto, elimina todos los caracteres no alfanuméricos
 def getQueries(text, n):
     sentenceEnders = re.compile("['.!?]")
     sentenceList = sentenceEnders.split(text)
@@ -14,29 +12,29 @@ def getQueries(text, n):
 
     for sentence in sentenceList:
         x = re.compile(r'\W+', re.UNICODE).split(sentence)
-        for word in x:
-            if word.lower() in en_stops:
-                x.remove(word)
-        x = [ele for ele in x if ele != '']
-        sentencesplits.append(x)
+        # Filtrar palabras vacías (stopwords)
+        x = [word for word in x if word.lower() not in en_stops and word]  # Uso de lista por comprensión
+        if x:  # Solo agregar si x no está vacío
+            sentencesplits.append(x)
+
     finalq = []
     for sentence in sentencesplits:
         l = len(sentence)
         if l > n:
-            l = int(l/n)
+            l = int(l / n)
             index = 0
             for i in range(0, l):
-                finalq.append(sentence[index:index+n])
-                index = index + n-1
-                if index+n > l:
-                    index = l-n-1
+                finalq.append(sentence[index:index + n])
+                index = index + n - 1
+                if index + n > l:
+                    index = l - n - 1
             if index != len(sentence):
-                finalq.append(sentence[len(sentence)-index:len(sentence)])
+                finalq.append(sentence[len(sentence) - index:len(sentence)])
         else:
             if l > 4:
                 finalq.append(sentence)
-    return finalq
 
+    return finalq
 
 def findSimilarity(text):
     n = 9
@@ -74,15 +72,19 @@ def findSimilarity(text):
                 outputLink[prevlink] += percentage
             elif c[link] == 1:
                 totalPercent += percentage
-            print(link, totalPercent)
 
         # Enviar los resultados al frontend
+        print("Enlaces encontrados y sus valores de similitud:")
+        for link, perc in outputLink.items():
+            print(f"Link: {link} - Valor de Similitud: {perc}")
+
+        # Retorna los resultados para la interfaz
         return totalPercent, outputLink  # Asegúrate de devolver estos resultados
 
     else:
-        print("No queries to process. Total percentage cannot be calculated.")
+        print("No hay consultas que procesar. No se puede calcular el porcentaje total.")
 
     print(count, numqueries)
     print(totalPercent, outputLink)
-    print("\nDone!")
+    print("\nConsulta completa")
     return totalPercent, outputLink
